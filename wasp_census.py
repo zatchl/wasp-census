@@ -108,8 +108,8 @@ def nests_visited_count(census_df, wasp):
     return nests_visited
 
 
-def wasp_partners(census_df, wasp):
-    """Return a list of all the partners the wasp has shared a nest with."""
+def wasp_partner_count(census_df, wasp):
+    """Return the number of other wasps the wasp has shared a nest with."""
     partners = set()
 
     # Iterate over the nests and dates
@@ -122,7 +122,7 @@ def wasp_partners(census_df, wasp):
                 for partner in wasps_on_nest.replace(" ", "").split(","):
                     if partner != wasp:
                         partners.add(partner)
-    return list(partners)
+    return len(partners)
 
 
 def create_wasp_summary_df(census_df):
@@ -142,7 +142,7 @@ def create_wasp_summary_df(census_df):
         summary_df.at[wasp, summary_df.columns[1]] = nests_visited_count(
             census_df, wasp
         )
-        summary_df.at[wasp, summary_df.columns[2]] = wasp_partners(census_df, wasp)
+        summary_df.at[wasp, summary_df.columns[2]] = wasp_partner_count(census_df, wasp)
 
     return summary_df
 
